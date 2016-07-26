@@ -40,6 +40,8 @@ class D3Q15Lattice(Lattice):
 	    1./72.,1./72.,1./72.,1./72.]
         self.w = np.array(self.w,dtype=np.float32)
         
+    
+        
         
 class D3Q19Lattice(Lattice):
     def __init__(self,Nx,Ny,Nz):
