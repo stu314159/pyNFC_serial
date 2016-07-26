@@ -7,8 +7,8 @@
 """
 
 import FluidChannel as fc
-import pyPartition as pp
-from pymetis import part_graph #<-- requires that the PrgEnv-intel module be selected
+#import pyPartition as pp
+#from pymetis import part_graph #<-- requires that the PrgEnv-intel module be selected
 import numpy as np
 import scipy
 import math
@@ -18,7 +18,7 @@ geom_file_stub = 'openChannel'
 
 # set simulation parameters (as used in genInput.py):
 geom_filename = geom_file_stub + '.mat'
-lattice_type = 'D3Q27' # [ 'D3Q15' | 'D3Q19' | 'D3Q27' ]
+lattice_type = 'D3Q15' # [ 'D3Q15' | 'D3Q19' | 'D3Q27' ]
 Num_ts = 10
 ts_rep_freq = 1
 Warmup_ts = 0
