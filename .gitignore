@@ -1,0 +1,9 @@
+*.o*
+*.mat
+*.*~
+*~
+*.vtk
+*.out
+*.lbm
+*.pyc
+*.b_dat
