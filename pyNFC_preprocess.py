@@ -22,17 +22,11 @@ aN_divs = 10
 
 # construct the basic sphere
 print 'Constructing the channel with smooth sphere'
-geom_file_stub = 'sphere'
-sphereB = fc.SphereObstruction(d_golf_ball/2., aLx_p/2., aLy_p/2., aLz_p/2.)
-sphereChannel = fc.FluidChannel(Lx_p = aLx_p,Ly_p = aLy_p, Lz_p = aLz_p,
-                                N_divs = aN_divs, obst = sphereB)
-sphereChannel.write_mat_file(geom_file_stub)
-
+geom_file_stub = 'openChannel'
 
 # set simulation parameters (as used in genInput.py):
 geom_filename = geom_file_stub + '.mat'
 lattice_type = 'D3Q27' # [ 'D3Q15' | 'D3Q19' | 'D3Q27' ]
-partition_style = 'metis' # [ '1D' | '3D' | 'metis']
 Num_ts = 10
 ts_rep_freq = 1
 Warmup_ts = 0
@@ -41,13 +35,6 @@ Re = 5
 dt = 0.002
 Cs = 0
 Restart_flag = 0
-
-numProcs = 8  #<--- for this version, I will need to know how many partitions I intend to create
-
-# --- do input file processing as with genInput.py - will also add in the partitioning information ---- 
-# ---- this means, I will need to know the number of processes in advance, I guess ----- though
-# ---- this could alternatively be done from the pyNFC code...think about that...
-#----You should not have to edit anything below this line -------------------
 
 geom_input = scipy.io.loadmat(geom_filename)
 # overall domain dimensions
@@ -181,27 +168,3 @@ else:
     print 'Run aborted.  Better luck next time!'
 
 
-# ------------------------------------------------------------------------------------------
-# add the partitioning work here; just use metis; if you can make it work with metis,
-# it also should "just work" for geometric partitioning schemes
-
-if lattice_type == 'D3Q15':
-   lat = pp.D3Q15Lattice(int(Nx),int(Ny),int(Nz))
-elif lattice_type == 'D3Q19':
-   lat = pp.D3Q19Lattice(int(Nx),int(Ny),int(Nz))
-else:
-   lat = pp.D3Q27Lattice(int(Nx),int(Ny),int(Nz))
-
-
-#lat15 = pp.D3Q15Lattice(int(Nx),int(Ny),int(Nz))
-print "initializing the adjacency list"
-lat.initialize_adjDict();
-print "creating %s partition for %d processes" % (partition_style, numProcs)
-lat.set_Partition(numParts= numProcs, style = partition_style)
-lat.compute_cutSize()
-print "cut size for %s partition = %g" % (partition_style, lat.get_cutSize())
-print "writing vtk file for %s partition" % partition_style
-partition_vtk_filename = "partition_%s.vtk" % partition_style
-lat.partition.write_vtk(partition_vtk_filename)
-print "writing %s partition to disk" % partition_style
-lat.partition.write_partition()
