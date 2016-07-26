@@ -13,15 +13,7 @@ import numpy as np
 import scipy
 import math
 
-# generate a suitable geometry:
-d_golf_ball = 0.0427 # meters
-aLx_p = 0.16 
-aLy_p = 0.16
-aLz_p = 0.3
-aN_divs = 10
-
-# construct the basic sphere
-print 'Constructing the channel with smooth sphere'
+# select geometry
 geom_file_stub = 'openChannel'
 
 # set simulation parameters (as used in genInput.py):
